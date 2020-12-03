@@ -37,7 +37,7 @@ let rec three_sum_sorted nums target i =
 
 let part2 sorted_values =
   let num1, num2, num3 =
-    Option.value_exn (three_sum_sorted sorted_values 2020 1)
+    Option.value_exn (three_sum_sorted sorted_values 2020 0)
   in
   printf "%d\n" (num1 * num2 * num3)
 

@@ -1,6 +1,6 @@
 (executable
  (name day1)
- (modules day1)
+ (modules day1 util)
  (libraries base stdio))
 
 (env
