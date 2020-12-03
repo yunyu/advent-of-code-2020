@@ -15,9 +15,31 @@ let part1 sorted_values =
     Option.value_exn
       (two_sum_sorted sorted_values 2020 0 (Array.length sorted_values - 1))
   in
-  print_endline (Int.to_string (num1 * num2))
+  printf "%d\n" (num1 * num2)
 
-let part2 sorted_values = ()
+let rec three_sum_sorted nums target i =
+  if i = Array.length nums then None
+  else
+    let num = nums.(i) in
+    let excluded =
+      Array.concat
+        [
+          Array.sub nums ~pos:0 ~len:i;
+          Array.sub nums ~pos:(i + 1) ~len:(Array.length nums - i - 1);
+        ]
+    in
+    let two_sum_result =
+      two_sum_sorted excluded (target - num) 0 (Array.length excluded - 1)
+    in
+    match two_sum_result with
+    | None -> three_sum_sorted nums target (i + 1)
+    | Some (num2, num3) -> Some (num, num2, num3)
+
+let part2 sorted_values =
+  let num1, num2, num3 =
+    Option.value_exn (three_sum_sorted sorted_values 2020 1)
+  in
+  printf "%d\n" (num1 * num2 * num3)
 
 let () =
   let lines = In_channel.read_lines "./data/day1.txt" in
