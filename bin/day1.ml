@@ -10,11 +10,18 @@ let rec two_sum_sorted nums target l r =
     else two_sum_sorted nums target (l + 1) r
   else None
 
+let part1 sorted_values =
+  let num1, num2 =
+    Option.value_exn
+      (two_sum_sorted sorted_values 2020 0 (Array.length sorted_values - 1))
+  in
+  print_endline (Int.to_string (num1 * num2))
+
+let part2 sorted_values = ()
+
 let () =
   let lines = In_channel.read_lines "./data/day1.txt" in
   let values = Array.of_list_map lines ~f:Int.of_string in
-  let num1, num2 =
-    Array.sort values ~compare:Int.compare;
-    Option.value_exn (two_sum_sorted values 2020 0 (Array.length values - 1))
-  in
-  print_endline (Int.to_string (num1 * num2))
+  Array.sort values ~compare:Int.compare;
+  part1 values;
+  part2 values
